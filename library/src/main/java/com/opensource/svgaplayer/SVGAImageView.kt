@@ -179,6 +179,12 @@ open class SVGAImageView : ImageView {
                         it.getFloat(animatorClass).let {
                             durationScale = it.toDouble()
                         }
+
+                        // fix Moto G5(7.0) sDurationScale=0.0f，导致动画无法正常播放的bug
+                        if (durationScale == 0.0) {
+                            it.set(animatorClass, 1.0f)
+                            durationScale = 1.0
+                        }
                     }
                 }
             } catch (e: Exception) {}
